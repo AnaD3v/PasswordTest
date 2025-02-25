@@ -1,5 +1,5 @@
 let predefinedSites = [];
-const API_URL = "https://seu-backend.onrender.com"; // Substitua pela URL correta
+const API_URL = "https://testpassword.onrender.com/"; // Substitua pela URL correta
 
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
