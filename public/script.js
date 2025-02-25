@@ -4,17 +4,23 @@ let predefinedSites = [];
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
     try {
-        const response = await fetch('https://testpassword.onrender.com/site-selectors'); // Busca do backend
-        if (!response.ok) throw new Error('Não foi possível carregar os seletores dos sites.');
+        console.log("Iniciando a requisição para carregar seletores...");
 
-        predefinedSites = await response.json();
-        console.log('Seletores carregados:', predefinedSites);
+        const response = await fetch('site-selectors.json'); 
+        
+        console.log("Resposta da API:", response);
+
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
+
+        const data = await response.json();
+        console.log('Seletores carregados:', data);
+        
+        predefinedSites = data;
     } catch (error) {
-        console.error(error);
-        alert("Erro ao carregar os seletores.");
+        console.error("Erro ao carregar os seletores:", error);
+        alert("Erro ao carregar os seletores. Verifique o console para mais detalhes.");
     }
 }
-
 
 // Chama a função para carregar os seletores
 loadSelectors();
