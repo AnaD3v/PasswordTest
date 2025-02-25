@@ -34,10 +34,16 @@ app.post('/login', async (req, res) => {
     let browser;
 
     try {
-        browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Para maior compatibilidade
-        });
+        (async () => {
+            const browser = await puppeteer.launch({
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable'
+            });
+        
+            console.log('Puppeteer iniciado com sucesso!');
+            await browser.close();
+        })();
 
         for (let site of sites) {
             let result = { site: site.title, success: false, message: '', cookies: [] };
@@ -97,7 +103,7 @@ app.post('/login', async (req, res) => {
 
                 // Esperar pela navegação pós-login
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
-                
+
 
                 // Capturar cookies pós-login
                 const postLoginCookies = await page.cookies();

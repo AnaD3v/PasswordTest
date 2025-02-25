@@ -14,7 +14,7 @@
     "chrome-launcher": "^1.1.2",
     "cors": "^2.8.5",
     "express": "^4.21.1",
-    "puppeteer": "^23.9.0",
+    "puppeteer": "^23.11.1",
     "puppeteer-core": "^23.9.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
