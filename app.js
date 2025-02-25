@@ -34,7 +34,7 @@ app.post('/login', async (req, res) => {
 
     try {
         browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox'] // Para maior compatibilidade
         });
 
@@ -159,7 +159,7 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Inicia o servidor na porta 3000
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+const port = process.env.PORT || 3000; // Usa a porta fornecida pelo Render ou a porta 3000 localmente
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
 });
