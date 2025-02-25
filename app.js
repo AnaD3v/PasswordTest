@@ -10,21 +10,23 @@ const app = express();
 
 app.use(cors({
     origin: [
-        'https://testpassword.onrender.com',
-        'http://127.0.0.1:5500', // Live Server (padrão)
-        'http://localhost:5500'  // Live Server com "localhost"
+        'https://testpassword.onrender.com', 
+        'http://127.0.0.1:5500', // Live Server
+        'http://localhost:5500', // Live Server com localhost
+        'http://localhost:3000'  // Backend local
     ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
 
-
 app.use(express.json());
+
 
 // Configuração do diretório público
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public'))); // Serve arquivos estáticos da pasta public
+
 
 app.post('/login', async (req, res) => {
     console.log('Requisição recebida:', req.body);
@@ -34,17 +36,12 @@ app.post('/login', async (req, res) => {
     let browser;
 
     try {
-        (async () => {
-            const browser = await puppeteer.launch({
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable'
-            });
+        let browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable'
+        });
         
-            console.log('Puppeteer iniciado com sucesso!');
-            await browser.close();
-        })();
-
         for (let site of sites) {
             let result = { site: site.title, success: false, message: '', cookies: [] };
             let page;

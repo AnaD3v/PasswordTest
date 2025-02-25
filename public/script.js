@@ -1,12 +1,12 @@
 let predefinedSites = [];
 
+
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
     try {
-        const response = await fetch('site-selectors.json');
-        if (!response.ok) {
-            throw new Error('Não foi possível carregar os seletores dos sites.');
-        }
+        const response = await fetch('https://testpassword.onrender.com/site-selectors'); // Busca do backend
+        if (!response.ok) throw new Error('Não foi possível carregar os seletores dos sites.');
+
         predefinedSites = await response.json();
         console.log('Seletores carregados:', predefinedSites);
     } catch (error) {
@@ -14,6 +14,7 @@ async function loadSelectors() {
         alert("Erro ao carregar os seletores.");
     }
 }
+
 
 // Chama a função para carregar os seletores
 loadSelectors();
@@ -142,29 +143,27 @@ async function executeLogin() {
     document.getElementById('result').innerText = 'Aguarde, processando...';
 
     try {
-        // Envia os dados de login para o servidor
         const response = await fetch('https://testpassword.onrender.com/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                sites: selectedSites,
-                username: username,
-                password: password,
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sites: selectedSites, username, password })
         });
 
         if (!response.ok) {
             throw new Error(`Erro na resposta do servidor: ${response.statusText}`);
         }
 
-        const result = await response.json();
-        if (result.length === 0) {
-            document.getElementById('result').innerText = 'Nenhum site processado.';
-        } else {
-            document.getElementById('result').innerText = result.map(res => `${res.site}: ${res.message}`).join('\n');
+        let result;
+        try {
+            result = await response.json();
+        } catch (jsonError) {
+            throw new Error('Erro ao interpretar a resposta do servidor.');
         }
+
+        document.getElementById('result').innerText = 
+            result.length === 0 
+                ? 'Nenhum site processado.' 
+                : result.map(res => `${res.site}: ${res.message}`).join('\n');
 
     } catch (error) {
         console.error('Erro ao executar login:', error);
