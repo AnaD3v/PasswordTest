@@ -1,24 +1,17 @@
 let predefinedSites = [];
 
-
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
     try {
-        console.log("Iniciando a requisição para carregar seletores...");
-
-        const response = await fetch('site-selectors.json'); 
-        
-        console.log("Resposta da API:", response);
-
-        if (!response.ok) throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
-
-        const data = await response.json();
-        console.log('Seletores carregados:', data);
-        
-        predefinedSites = data;
+        const response = await fetch('site-selectors.json');
+        if (!response.ok) {
+            throw new Error('Não foi possível carregar os seletores dos sites.');
+        }
+        predefinedSites = await response.json();
+        console.log('Seletores carregados:', predefinedSites);
     } catch (error) {
-        console.error("Erro ao carregar os seletores:", error);
-        alert("Erro ao carregar os seletores. Verifique o console para mais detalhes.");
+        console.error(error);
+        alert("Erro ao carregar os seletores.");
     }
 }
 
@@ -149,27 +142,29 @@ async function executeLogin() {
     document.getElementById('result').innerText = 'Aguarde, processando...';
 
     try {
-        const response = await fetch('https://testpassword.onrender.com/login', {
+        // Envia os dados de login para o servidor
+        const response = await fetch('http://127.0.0.1:3000/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sites: selectedSites, username, password })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                sites: selectedSites,
+                username: username,
+                password: password,
+            })
         });
 
         if (!response.ok) {
             throw new Error(`Erro na resposta do servidor: ${response.statusText}`);
         }
 
-        let result;
-        try {
-            result = await response.json();
-        } catch (jsonError) {
-            throw new Error('Erro ao interpretar a resposta do servidor.');
+        const result = await response.json();
+        if (result.length === 0) {
+            document.getElementById('result').innerText = 'Nenhum site processado.';
+        } else {
+            document.getElementById('result').innerText = result.map(res => `${res.site}: ${res.message}`).join('\n');
         }
-
-        document.getElementById('result').innerText = 
-            result.length === 0 
-                ? 'Nenhum site processado.' 
-                : result.map(res => `${res.site}: ${res.message}`).join('\n');
 
     } catch (error) {
         console.error('Erro ao executar login:', error);
