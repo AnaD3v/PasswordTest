@@ -1,5 +1,6 @@
 import express from 'express';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import { executablePath } from 'puppeteer';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
@@ -36,6 +37,7 @@ app.post('/login', async (req, res) => {
         // Lança o navegador dentro do handler da requisição
         browser = await puppeteer.launch({
             headless: true,
+            executablePath: executablePath(),
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
