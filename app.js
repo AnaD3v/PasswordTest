@@ -10,7 +10,6 @@ const app = express();
 
 app.use(cors({
     origin: [
-        'https://password-testing-xi.vercel.app/',
         'http://127.0.0.1:5500', // Live Server (padrão)
         'http://localhost:5500'  // Live Server com "localhost"
     ],
