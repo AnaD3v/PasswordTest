@@ -143,7 +143,7 @@ async function executeLogin() {
 
     try {
         // Envia os dados de login para o servidor
-        const response = await fetch('https://testpassword.onrender.com/login', {
+        const response = await fetch('http://127.0.0.1:3000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
