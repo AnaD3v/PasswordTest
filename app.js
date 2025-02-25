@@ -1,6 +1,5 @@
 import express from 'express';
-import puppeteer from 'puppeteer-core';
-import { executablePath } from 'puppeteer';
+import puppeteer from 'puppeteer';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
@@ -19,6 +18,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 
+
 app.use(express.json());
 
 // Configuração do diretório público
@@ -34,11 +34,9 @@ app.post('/login', async (req, res) => {
     let browser;
 
     try {
-        // Lança o navegador dentro do handler da requisição
         browser = await puppeteer.launch({
             headless: true,
-            executablePath: executablePath(),
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Para maior compatibilidade
         });
 
         for (let site of sites) {
@@ -69,8 +67,63 @@ app.post('/login', async (req, res) => {
                 console.log('Cookies iniciais:', JSON.stringify(initialCookies, null, 2));
                 result.cookies.push({ stage: 'initial', cookies: initialCookies });
 
-                // Processo de login e verificação
-                // (restante do seu código de login...)
+                let iframe = null;
+                try {
+                    // Tentar localizar um iframe
+                    const iframeElement = await page.waitForSelector('iframe', { visible: true, timeout: 2000 }).catch(() => null);
+                    if (iframeElement) {
+                        iframe = await iframeElement.contentFrame();
+                        console.log(`Iframe encontrado no site: ${site.title}`);
+                    } else {
+                        console.log(`Nenhum iframe encontrado no site: ${site.title}`);
+                    }
+                } catch (error) {
+                    console.log(`Erro ao procurar iframe no site ${site.title}:`, error.message);
+                }
+
+                // Selecionar o contexto correto (iframe ou página principal)
+                const context = iframe || page;
+
+                // Preencher login e senha
+                await context.waitForSelector('#txtUsuario, #username', { visible: true });
+                await context.type('#txtUsuario, input#username, #username', username);
+
+                await context.waitForSelector('#pwdSenha, #password', { visible: true });
+                await context.type('#pwdSenha, input#password, #password', password);
+
+                // Clicar no botão de login
+                await context.waitForSelector('#sbmEntrar, #btnEntrar, #kc-login', { visible: true });
+                await context.click('#sbmEntrar, #btnEntrar, #kc-login');
+
+                // Esperar pela navegação pós-login
+                await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
+                
+
+                // Capturar cookies pós-login
+                const postLoginCookies = await page.cookies();
+                console.log('Cookies pós-login:', JSON.stringify(postLoginCookies, null, 2));
+                result.cookies.push({ stage: 'post-login', cookies: postLoginCookies });
+
+                // Verificar elementos de erro no login
+                const errorSelector = '#conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
+                const errorMessageElement = await page.waitForSelector(errorSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                if (errorMessageElement) {
+                    const errorText = await page.evaluate(el => el.textContent, errorMessageElement);
+                    result.message = `${errorText.trim()}`;
+                    results.push(result);
+                    continue;
+                }
+
+                // Verificar elementos que indicam sucesso no login
+                const successSelector = 'body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
+
+                if (successElement) {
+                    result.success = true;
+                    result.message = 'Login bem-sucedido!';
+                } else {
+                    result.message = 'Falha no login: Não foi possível verificar o sucesso.';
+                }
 
                 results.push(result);
 
@@ -105,6 +158,7 @@ app.post('/login', async (req, res) => {
     console.log('Resultado:', results);
     res.json(results);
 });
+
 
 const port = process.env.PORT || 3000; // Usa a porta fornecida pelo Render ou a porta 3000 localmente
 app.listen(port, () => {
