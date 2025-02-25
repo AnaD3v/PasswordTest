@@ -8,6 +8,15 @@ import { dirname } from 'path';
 // Criação da instância do Express
 const app = express();
 
+// Caminho para o Chrome no Render
+const executablePath = '/usr/bin/google-chrome-stable';
+
+const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: executablePath,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
+
 app.use(cors({
     origin: [
         'https://testpassword.onrender.com',
@@ -17,6 +26,7 @@ app.use(cors({
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
+
 
 app.use(express.json());
 
