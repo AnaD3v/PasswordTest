@@ -1,0 +1,22 @@
+{
+  "name": "passwordtesting",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chrome-launcher": "^1.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "puppeteer": "^23.9.0",
+    "puppeteer-core": "^23.9.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "type": "module"
+}

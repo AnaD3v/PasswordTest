@@ -1,0 +1,1126 @@
+[
+    {
+        "url": "https://sistemas.stf.jus.br/cas/login",
+        "title": "STF-PROP-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://cpe.web.stj.jus.br/#/",
+        "title": "STJ-PROP-1G",
+        "loginSelector": "#cpf",
+        "passwordSelector": "#app > div > div.row.row-eq-height.login-wrapper > div:nth-child(2) > div.login-box-body > form > div:nth-child(2) > input"
+    },
+    {
+        "url": "https://esaj.tjac.jus.br/sajcas/login?service=https%3A%2F%2Fesaj.tjac.jus.br%2Fesaj%2Fj_spring_cas_security_check",
+        "title": "TJAC-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://www2.tjal.jus.br/sajcas/login?service=https%3A%2F%2Fwww2.tjal.jus.br%2Fesaj%2Fj_spring_cas_security_check",
+        "title": "TJAL-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://consultasaj.tjam.jus.br/sajcas/login?service=https%3A%2F%2Fconsultasaj.tjam.jus.br%2Fesaj%2Fj_spring_cas_security_check",
+        "title": "TJAM-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjap.jus.br/1g/login.seam",
+        "title": "TJAP-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjap.jus.br/2g/login.seam?loginComCertificado=false&cid=10203",
+        "title": "TJAP-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjba.jus.br/pje-web/login.seam",
+        "title": "TJBA-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.tjba.jus.br/pje-web/login.seam",
+        "title": "TJBA-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://projudi.tjba.jus.br/projudi/",
+        "title": "TJBA-PROJUDI-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://esaj.tjce.jus.br/sajcas/login?service=https%3A%2F%2Fesaj.tjce.jus.br%2Fesaj%2Fj_spring_cas_security_check",
+        "title": "TJCE-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjce.jus.br/pje1grau/login.seam",
+        "title": "TJCE-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjce.jus.br/pje2grau/login.seam",
+        "title": "TJCE-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjdft.jus.br/pje/login.seam",
+        "title": "TJDF-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2i.tjdft.jus.br/pje/login.seam",
+        "title": "TJDF-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.trf5.jus.br/pje/login.seam",
+        "title": "TRF5-PJE-JEF-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://sistemas.tjes.jus.br/pje/login.seam",
+        "title": "TJES-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://sistemas.tjes.jus.br/pje2g/login.seam",
+        "title": "TJES-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://sistemas.tjes.jus.br/projudi/",
+        "title": "TJES-PROJUDI-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pjd.tjgo.jus.br/",
+        "title": "TJGO-PROJUDI-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjma.jus.br/pje/login.seam",
+        "title": "TJMA-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2.tjma.jus.br/pje2g/login.seam",
+        "title": "TJMA-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjmg.jus.br/pje/login.seam",
+        "title": "TJMG-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pjerecursal.tjmg.jus.br/pje/login.seam",
+        "title": "TJMG-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://projudi.tjmg.jus.br/projudi/",
+        "title": "TJMG-PROJUDI-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://esaj.tjms.jus.br/sajcas/login",
+        "title": "TJMS-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjmt.jus.br/pje/login.seam",
+        "title": "TJMT-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2.tjmt.jus.br/pje2/login.seam",
+        "title": "TJMT-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjpa.jus.br/pje/login.seam",
+        "title": "TJPA-PJE-1G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password",
+        "cookies": [
+            {
+                "name": "OAuth_Token_Request_State",
+                "value": "e597ad95-ef0b-4a62-8727-4faf4c001bc7",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/",
+                "expires": -1,
+                "size": 61,
+                "httpOnly": true,
+                "secure": true,
+                "session": true,
+                "sameSite": "None",
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            },
+            {
+                "name": "MO",
+                "value": "P",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/pje",
+                "expires": -1,
+                "size": 3,
+                "httpOnly": false,
+                "secure": false,
+                "session": true,
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            },
+            {
+                "name": "JSESSIONID",
+                "value": "NWSsoCTpUpkOLIs89Lk7mqen_FiFRcrFTSwxEfpN.pje2-1g-n46",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/pje",
+                "expires": -1,
+                "size": 62,
+                "httpOnly": false,
+                "secure": true,
+                "session": true,
+                "sameSite": "None",
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            }
+        ]
+    },
+    {
+        "url": "https://pje.tjpa.jus.br/pje-2g/login.seam",
+        "title": "TJPA-PJE-2G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
+    },
+    {
+        "url": "https://pje.tjpb.jus.br/pje/login.seam",
+        "title": "TJPB-PJE-1G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
+    },
+    {
+        "url": "https://pje.tjpb.jus.br/pje2g/login.seam",
+        "title": "TJPB-PJE-2G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password",
+        "cookies": [
+            {
+                "name": "OAuth_Token_Request_State",
+                "value": "e597ad95-ef0b-4a62-8727-4faf4c001bc7",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/",
+                "expires": -1,
+                "size": 61,
+                "httpOnly": true,
+                "secure": true,
+                "session": true,
+                "sameSite": "None",
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            },
+            {
+                "name": "MO",
+                "value": "P",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/pje",
+                "expires": -1,
+                "size": 3,
+                "httpOnly": false,
+                "secure": false,
+                "session": true,
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            },
+            {
+                "name": "JSESSIONID",
+                "value": "NWSsoCTpUpkOLIs89Lk7mqen_FiFRcrFTSwxEfpN.pje2-1g-n46",
+                "domain": "pje.tjpa.jus.br",
+                "path": "/pje",
+                "expires": -1,
+                "size": 62,
+                "httpOnly": false,
+                "secure": true,
+                "session": true,
+                "sameSite": "None",
+                "priority": "Medium",
+                "sameParty": false,
+                "sourceScheme": "Secure"
+            }
+        ]
+    },
+    {
+        "url": "https://pje.tjpe.jus.br/1g/login.seam",
+        "title": "TJPE-PJE-1G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
+    },
+    {
+        "url": "https://pje.tjpe.jus.br/2g/login.seam",
+        "title": "TJPE-PJE-2G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
+    },
+    {
+        "url": "https://pje.tjpi.jus.br/1g/login.seam",
+        "title": "TJPI-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tjpi.jus.br/2g/login.seam",
+        "title": "TJPI-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://tjrj.pje.jus.br/1g/login.seam",
+        "title": "TJRJ-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://www3.tjrj.jus.br/segweb/faces/login.jsp?indGet=true&SIGLASISTEMA=PORTALSERV",
+        "title": "TJRJ-PROP-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.tjrn.jus.br/pje/login.seam",
+        "title": "TJRN-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.tjrn.jus.br/pje/login.seam",
+        "title": "TJRN-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pjepg.tjro.jus.br/login.seam",
+        "title": "TJRO-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pjesg.tjro.jus.br/login.seam",
+        "title": "TJRO-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "http://pje.tjrr.jus.br/pje/login.seam",
+        "title": "TJRR-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "http://pje2.tjrr.jus.br/pje/login.seam",
+        "title": "TJRR-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://projudi.tjrr.jus.br/projudi/",
+        "title": "TJRR-PROJUDI-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc1g.tjrs.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TJRS-EPROC-1G",
+        "loginSelector": "#txtUsuario",
+        "passwordSelector": "#pwdSenha"
+    },
+    {
+        "url": "https://eproc2g.tjrs.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TJRS-EPROC-2G",
+        "loginSelector": "#txtUsuario",
+        "passwordSelector": "#pwdSenha"
+    },
+    {
+        "url": "https://eproc1g.tjsc.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TJSC-EPROC-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc2g.tjsc.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TJSC-EPROC-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://esaj.tjsp.jus.br/sajcas/login?service=https%3A%2F%2Fesaj.tjsp.jus.br%2Fesaj%2Fj_spring_cas_security_check",
+        "title": "TJSP-ESAJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc1.tjto.jus.br/eprocV2_prod_1grau/externo_controlador.php?acao=principal",
+        "title": "TJTO-EPROC-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc2.tjto.jus.br/eprocV2_prod_2grau/externo_controlador.php?acao=principal",
+        "title": "TJTO-EPROC-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.trf1.jus.br/pje/login.seam",
+        "title": "TRF1-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.trf1.jus.br/pje/login.seam",
+        "title": "TRF1-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.trf2.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TRF2-EPROC-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.jfes.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TRF2-EPROC-JFES-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.jfrj.jus.br/eproc/externo_controlador.php?acao=principal",
+        "title": "TRF2-EPROC-JFRJ-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.trf3.jus.br/pje/login.seam",
+        "title": "TRF3-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.trf3.jus.br/pje/login.seam",
+        "title": "TRF3-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.trf6.jus.br/pje/login.seam",
+        "title": "TRF6-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje2g.trf6.jus.br/pje/login.seam",
+        "title": "TRF6-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc1g.trf6.jus.br/eproc/",
+        "title": "TRF6-EPROC-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc2g.trf6.jus.br/eproc/",
+        "title": "TRF6-EPROC-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://web.trf3.jus.br/peticoesjef/Atermacoes/Login",
+        "title": "TRF3-PROP-JFSP-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.trf4.jus.br/eproc2trf4/externo_controlador.php?acao=principal",
+        "title": "TRF4-EPROC-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.jfpr.jus.br/eprocV2/externo_controlador.php?acao=principal",
+        "title": "TRF4-EPROC-JFPR-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.jfrs.jus.br/eprocV2/externo_controlador.php?acao=principal",
+        "title": "TRF4-EPROC-JFRS-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://eproc.jfsc.jus.br/eprocV2/externo_controlador.php?acao=principal",
+        "title": "TRF4-EPROC-JFSC-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.trf5.jus.br/pje/login.seam",
+        "title": "TRF5-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt1.jus.br/primeirograu/login.seam",
+        "title": "TRT1-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt1.jus.br/segundograu/login.seam",
+        "title": "TRT1-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt10.jus.br/primeirograu/login.seam",
+        "title": "TRT10-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt10.jus.br/segundograu/login.seam",
+        "title": "TRT10-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt11.jus.br/primeirograu/login.seam",
+        "title": "TRT11-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt11.jus.br/segundograu/login.seam",
+        "title": "TRT11-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt12.jus.br/primeirograu/login.seam",
+        "title": "TRT12-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt12.jus.br/segundograu/login.seam",
+        "title": "TRT12-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt13.jus.br/primeirograu/login.seam",
+        "title": "TRT13-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt13.jus.br/segundograu/login.seam",
+        "title": "TRT13-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://www.trt13.jus.br/portalservicos/login/login.jsf",
+        "title": "TRT13-PROP-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt14.jus.br/primeirograu/login.seam",
+        "title": "TRT14-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt14.jus.br/segundograu/login.seam",
+        "title": "TRT14-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt15.jus.br/primeirograu/login.seam",
+        "title": "TRT15-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt15.jus.br/segundograu/login.seam",
+        "title": "TRT15-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt16.jus.br/primeirograu/login.seam",
+        "title": "TRT16-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt16.jus.br/segundograu/login.seam",
+        "title": "TRT16-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt17.jus.br/primeirograu/login.seam",
+        "title": "TRT17-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt17.jus.br/segundograu/login.seam",
+        "title": "TRT17-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt18.jus.br/primeirograu/login.seam",
+        "title": "TRT18-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt18.jus.br/segundograu/login.seam",
+        "title": "TRT18-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt19.jus.br/primeirograu/login.seam",
+        "title": "TRT19-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt19.jus.br/segundograu/login.seam",
+        "title": "TRT19-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt2.jus.br/primeirograu/login.seam",
+        "title": "TRT2-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt2.jus.br/segundograu/login.seam",
+        "title": "TRT2-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt20.jus.br/primeirograu/login.seam",
+        "title": "TRT20-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt20.jus.br/segundograu/login.seam",
+        "title": "TRT20-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt21.jus.br/primeirograu/login.seam",
+        "title": "TRT21-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt21.jus.br/segundograu/login.seam",
+        "title": "TRT21-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt22.jus.br/primeirograu/login.seam",
+        "title": "TRT22-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt22.jus.br/segundograu/login.seam",
+        "title": "TRT22-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt23.jus.br/primeirograu/login.seam",
+        "title": "TRT23-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt23.jus.br/segundograu/login.seam",
+        "title": "TRT23-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt24.jus.br/primeirograu/login.seam",
+        "title": "TRT24-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt24.jus.br/segundograu/login.seam",
+        "title": "TRT24-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt3.jus.br/primeirograu/login.seam",
+        "title": "TRT3-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt3.jus.br/segundograu/login.seam",
+        "title": "TRT3-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt4.jus.br/primeirograu/login.seam",
+        "title": "TRT4-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt4.jus.br/segundograu/login.seam",
+        "title": "TRT4-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt5.jus.br/primeirograu/login.seam",
+        "title": "TRT5-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt5.jus.br/segundograu/login.seam",
+        "title": "TRT5-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt6.jus.br/primeirograu/login.seam",
+        "title": "TRT6-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt6.jus.br/segundograu/login.seam",
+        "title": "TRT6-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt14.jus.br/segundograu/login.seam",
+        "title": "TRT14-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt7.jus.br/primeirograu/login.seam",
+        "title": "TRT7-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt7.jus.br/segundograu/login.seam",
+        "title": "TRT7-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt14.jus.br/segundograu/login.seam",
+        "title": "TRT14-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt8.jus.br/primeirograu/login.seam",
+        "title": "TRT8-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt8.jus.br/segundograu/login.seam",
+        "title": "TRT8-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt9.jus.br/primeirograu/login.seam",
+        "title": "TRT9-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.trt9.jus.br/segundograu/login.seam",
+        "title": "TRT9-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tst.jus.br/tst/login.seam",
+        "title": "TST-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://aplicacao3.tst.jus.br/visualizacaoAutos/SelecaoCadastro.pub?load=1",
+        "title": "TST-PROP-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g.tse.jus.br/pje/login.seam",
+        "title": "TSE-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ac.jus.br/pje/login.seam",
+        "title": "TREAC-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-al.tse.jus.br/pje/login.seam",
+        "title": "TREAL-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-al.jus.br/pje/login.seam",
+        "title": "TREAL-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-am.tse.jus.br/pje/login.seam",
+        "title": "TREAM-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-am.jus.br/pje/login.seam",
+        "title": "TREAM-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ap.tse.jus.br/pje/login.seam",
+        "title": "TREAP-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ap.jus.br/pje/login.seam",
+        "title": "TREAP-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ba.tse.jus.br/pje/login.seam",
+        "title": "TREBA-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ce.tse.jus.br/pje/login.seam",
+        "title": "TRECE-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ce.jus.br/pje/login.seam",
+        "title": "TRECE-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-es.tse.jus.br/pje/login.seam",
+        "title": "TREES-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-es.jus.br/pje/login.seam",
+        "title": "TREES-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-go.tse.jus.br/pje/login.seam",
+        "title": "TREGO-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-go.jus.br/pje/login.seam",
+        "title": "TREGO-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ma.tse.jus.br/pje/login.seam",
+        "title": "TREMA-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ma.jus.br/pje/login.seam",
+        "title": "TREMA-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-mg.tse.jus.br/pje/login.seam",
+        "title": "TREMG-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-mg.jus.br/pje/login.seam",
+        "title": "TREMG-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ms.tse.jus.br/pje/login.seam",
+        "title": "TREMS-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ms.jus.br/pje/login.seam",
+        "title": "TREMT-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-mt.jus.br/pje/login.seam",
+        "title": "TREMT-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-pa.tse.jus.br/pje/login.seam",
+        "title": "TREPA-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-pa.jus.br/pje/login.seam",
+        "title": "TREPA-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-pb.tse.jus.br/pje/login.seam",
+        "title": "TREPB-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-pb.jus.br/pje/login.seam",
+        "title": "TREPB-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-pe.tse.jus.br/pje/login.sea",
+        "title": "TREPE-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-pe.jus.br/pje/login.seam",
+        "title": "TREPE-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-pi.tse.jus.br/pje/login.seam",
+        "title": "TREPI-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-pi.jus.br/pje/login.seam",
+        "title": "TREPI-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-pr.tse.jus.br/pje/login.seam",
+        "title": "TREPR-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-pr.jus.br/pje/login.seam",
+        "title": "TREPR-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-rj.tse.jus.br/pje/login.seam",
+        "title": "TRERJ-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-rj.jus.br/pje/login.seam",
+        "title": "TRERJ-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-rn.tse.jus.br/pje/login.seam",
+        "title": "TRERN-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-rn.jus.br/pje/login.seam",
+        "title": "TRERN-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-ro.tse.jus.br/pje/login.seam",
+        "title": "TRERO-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-ro.jus.br/pje/login.seam",
+        "title": "TRERO-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-rr.tse.jus.br/pje/login.seam",
+        "title": "TRERR-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-rr.jus.br/pje/login.seam",
+        "title": "TRERR-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-rs.tse.jus.br/pje/login.seam",
+        "title": "TRERS-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-rs.jus.br/pje/login.seam",
+        "title": "TRERS-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-sc.tse.jus.br/pje/login.seam",
+        "title": "TRESC-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-sc.jus.br/pje/login.seam",
+        "title": "TRESC-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-se.tse.jus.br/pje/login.seam",
+        "title": "TRESE-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-se.jus.br/pje/login.seam",
+        "title": "TRESE-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-sp.tse.jus.br/pje/login.seam",
+        "title": "TRESP-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-sp.jus.br/pje/login.seam",
+        "title": "TRESP-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje1g-to.tse.jus.br/pje/login.seam",
+        "title": "TRETO-PJE-1G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    },
+    {
+        "url": "https://pje.tre-to.jus.br/pje/login.seam",
+        "title": "TRETO-PJE-2G",
+        "loginSelector": "input#username",
+        "passwordSelector": "input#password"
+    }
+]
