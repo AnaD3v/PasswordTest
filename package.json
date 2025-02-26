@@ -2,8 +2,8 @@
   "name": "passwordtesting",
   "version": "1.0.0",
   "main": "app.js",
- "scripts": {
-    "build": "npx puppeteer browsers install chrome && npm install",
+"scripts": {
+    "postinstall": "apt-get update && apt-get install -y chromium",
     "start": "node app.js"
   },
   "engines": {
@@ -17,7 +17,7 @@
     "chrome-launcher": "^1.1.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "puppeteer": "^21.0.0",
+    "puppeteer": "^21.3.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
