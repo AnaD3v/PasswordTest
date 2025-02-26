@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "postinstall": "npx puppeteer browsers install chrome",
     "start": "node app.js"
   },
   "engines": {

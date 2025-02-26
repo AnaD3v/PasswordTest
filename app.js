@@ -28,10 +28,18 @@ app.post('/login', async (req, res) => {
     let browser;
 
     try {
-        browser = await puppeteer.launch({
-            headless: 'true',
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+        const browser = await puppeteer.launch({
+            headless: true,
+            executablePath: '/usr/bin/google-chrome-stable',
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu'
+            ]
         });
+        
+        
 
         for (let site of sites) {
             let result = { site: site.title, success: false, message: '', cookies: [] };
