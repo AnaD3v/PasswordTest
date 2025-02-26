@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "postinstall": "npx puppeteer install",
+    "postinstall": "npx puppeteer install && npx playwright install chromium",
     "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [],
   "author": "",
