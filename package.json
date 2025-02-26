@@ -2,7 +2,8 @@
   "name": "passwordtesting",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": {
+ "scripts": {
+    "build": "npx puppeteer browsers install chrome && npm install",
     "start": "node app.js"
   },
   "engines": {

@@ -29,8 +29,8 @@ app.post('/login', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: true,
-            executablePath: '/usr/bin/google-chrome-stable',
+            headless: "new",
+            executablePath: '/opt/render/.cache/puppeteer/chrome/linux-121.0.6167.85/chrome-linux64/chrome', // Novo caminho
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
@@ -39,8 +39,6 @@ app.post('/login', async (req, res) => {
             ]
         });
         
-        
-
         for (let site of sites) {
             let result = { site: site.title, success: false, message: '', cookies: [] };
             let page;
