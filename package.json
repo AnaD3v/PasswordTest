@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "postinstall": "npx puppeteer install && npx playwright install chromium",
+    "postinstall": "echo 'Postinstall skipped'",
     "start": "node app.js"
   },
   "engines": {
