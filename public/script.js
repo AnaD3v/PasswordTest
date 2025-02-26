@@ -1,5 +1,5 @@
 let predefinedSites = [];
-const API_URL = "https://testpassword.onrender.com"; // Substitua pela URL correta
+const API_URL = "https://testpassword.onrender.com/"; // Substitua pela URL correta
 
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
@@ -127,7 +127,7 @@ async function executeLogin() {
     document.getElementById('result').innerText = 'Aguarde, processando...';
 
     try {
-        const response = await fetch(`https://testpassword.onrender.com/login`, {  // 🔥 URL do backend no Render
+        const response = await fetch(`https://testpassword.onrender.com/login/`, {  // 🔥 URL do backend no Render
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
