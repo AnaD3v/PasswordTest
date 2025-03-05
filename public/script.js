@@ -1,5 +1,4 @@
 let predefinedSites = [];
-const API_URL = "https://testpassword.onrender.com/"; // Substitua pela URL correta
 
 // Função para carregar os seletores dos sites a partir do arquivo JSON
 async function loadSelectors() {
@@ -45,6 +44,8 @@ function showAutocompleteSuggestions(suggestions) {
         suggestionItem.addEventListener('click', () => {
             document.getElementById('url-input').value = ''; // Limpa a URL ao selecionar um título
             addChip(site); // Adiciona o site à lista de chips
+
+            // Adiciona um pequeno atraso antes de remover o suggestionBox
             setTimeout(() => suggestionBox.remove(), 100);
         });
         suggestionBox.appendChild(suggestionItem);
@@ -57,9 +58,12 @@ function showAutocompleteSuggestions(suggestions) {
     });
 }
 
+
 // Função para lidar com o input do usuário e filtrar os sites disponíveis
 document.getElementById('url-input').addEventListener('input', function () {
     const inputValue = this.value.toLowerCase();
+
+    // Filtra os sites pela URL
     const matches = predefinedSites.filter(site => site.url.toLowerCase().includes(inputValue));
 
     if (matches.length > 0) {
@@ -69,6 +73,7 @@ document.getElementById('url-input').addEventListener('input', function () {
 
 // Função para adicionar chips (sites) à lista
 function addChip(site) {
+    // Previne a duplicação de sites na lista de chips
     if (!selectedSites.some(s => s.url === site.url)) {
         selectedSites.push(site);
         updateChipsList();
@@ -79,8 +84,14 @@ function updateChipsList() {
     const chipsList = document.getElementById('chips-list');
     const placeholder = document.getElementById('chips-placeholder');
 
-    chipsList.innerHTML = ''; // Limpa os chips
+    // Remove todos os chips antes de adicionar os novos
+    Array.from(chipsList.children).forEach(child => {
+        if (child !== placeholder) {
+            child.remove();
+        }
+    });
 
+    // Adiciona os chips
     selectedSites.forEach(site => {
         const chip = document.createElement('div');
         chip.className = 'chip';
@@ -94,11 +105,13 @@ function updateChipsList() {
 
 // Função para limpar os campos e remover todos os chips
 function clearFields() {
+    // Limpa os campos de URL, username e password
     document.getElementById('url-input').value = '';
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
-    document.getElementById('result').innerText = '';
+    document.getElementById('result').innerText = ''; // Limpa a mensagem de resultado
 
+    // Limpa a lista de chips (sites selecionados)
     selectedSites = [];
     updateChipsList();
 }
@@ -106,8 +119,10 @@ function clearFields() {
 // Função para remover chips (sites) da lista
 function removeChip(siteUrl) {
     selectedSites = selectedSites.filter(s => s.url !== siteUrl);
-    updateChipsList();
+    updateChipsList(); // Atualiza a lista de chips após remoção
 }
+
+
 
 // Função para executar o login com múltiplos sites
 async function executeLogin() {
@@ -127,15 +142,16 @@ async function executeLogin() {
     document.getElementById('result').innerText = 'Aguarde, processando...';
 
     try {
-        const response = await fetch(`https://testpassword.onrender.com/login/`, {  // 🔥 URL do backend no Render
+        // Envia os dados de login para o servidor
+        const response = await fetch('http://127.0.0.1:3000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                sites: selectedSites.map(site => site.url), // Enviando apenas as URLs dos sites
-                username,
-                password,
+                sites: selectedSites,
+                username: username,
+                password: password,
             })
         });
 
@@ -144,9 +160,11 @@ async function executeLogin() {
         }
 
         const result = await response.json();
-        document.getElementById('result').innerText = result.length === 0
-            ? 'Nenhum site processado.'
-            : result.map(res => `${res.site}: ${res.message}`).join('\n');
+        if (result.length === 0) {
+            document.getElementById('result').innerText = 'Nenhum site processado.';
+        } else {
+            document.getElementById('result').innerText = result.map(res => `${res.site}: ${res.message}`).join('\n');
+        }
 
     } catch (error) {
         console.error('Erro ao executar login:', error);
