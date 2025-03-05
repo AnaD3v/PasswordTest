@@ -1,13 +1,14 @@
 {
   "name": "passwordtesting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Aplicativo de teste de senhas para automação de logins",
   "author": "Ana Flávia",
   "type": "module",
   "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder --win",
+    "publish": "electron-builder --win --publish always"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -25,19 +26,26 @@
     "productName": "PasswordTesting",
     "asar": false,
     "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "AnaD3v",
+        "repo": "PasswordTesting"
+      }
+    ],
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "shortcutName": "PasswordTesting",
+      "include": "src/installer.nsh",
+      "createDesktopShortcut": true
+    },
     "win": {
       "target": "nsis",
       "icon": "./public/icons/app-icon.ico",
       "signtoolOptions": {
         "signingHashAlgorithms": []
-      },
-      "publish": [
-        {
-          "provider": "github",
-          "owner": "AnaD3v",
-          "repo": "PasswordTesting"
-        }
-      ]
+      }
     },
     "mac": {
       "target": "dmg",
@@ -46,6 +54,9 @@
     "linux": {
       "target": "AppImage",
       "icon": "./public/icons/app-icon.png"
+    },
+    "directories": {
+      "output": "dist"
     }
   }
 }

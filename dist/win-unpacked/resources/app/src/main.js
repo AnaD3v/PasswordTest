@@ -82,6 +82,7 @@ function startAutoUpdater() {
 app.whenReady().then(() => {
     // Criar a janela do Electron
     createWindow();
+
     startAutoUpdater(); // Inicia o autoUpdater
     // Iniciar o servidor Express
     startExpressServer();

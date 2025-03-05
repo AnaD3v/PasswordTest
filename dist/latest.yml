@@ -1,8 +1,8 @@
-version: 1.0.0
+version: 1.0.1
 files:
-  - url: PasswordTesting-Setup-1.0.0.exe
-    sha512: B1gnVvwcqkzIkD5g+QrKzSlx2HH1p7uBMprMO1IExhJeD/Zl983mOaEHkKkHYk2A04Ecb7nwm64MLYewRAnKaw==
-    size: 104649641
-path: PasswordTesting-Setup-1.0.0.exe
-sha512: B1gnVvwcqkzIkD5g+QrKzSlx2HH1p7uBMprMO1IExhJeD/Zl983mOaEHkKkHYk2A04Ecb7nwm64MLYewRAnKaw==
-releaseDate: '2025-03-05T01:19:48.181Z'
+  - url: PasswordTesting-Setup-1.0.1.exe
+    sha512: +8z1eXVTspzZ+X9efs33Q/Bco/aHo4olw+V4mlH3UVXAVgZf55s7YFdq3LStxgaidSoEa3W5WqRJH03EugGH0g==
+    size: 104650705
+path: PasswordTesting-Setup-1.0.1.exe
+sha512: +8z1eXVTspzZ+X9efs33Q/Bco/aHo4olw+V4mlH3UVXAVgZf55s7YFdq3LStxgaidSoEa3W5WqRJH03EugGH0g==
+releaseDate: '2025-03-05T13:27:30.032Z'

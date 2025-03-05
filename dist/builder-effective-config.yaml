@@ -5,15 +5,21 @@ appId: com.seuapp.passwordtesting
 productName: PasswordTesting
 asar: false
 asarUnpack: '**/*.{exe,dll,bin,so,dmg}'
+publish:
+  - provider: github
+    owner: AnaD3v
+    repo: PasswordTesting
+nsis:
+  oneClick: true
+  perMachine: false
+  shortcutName: PasswordTesting
+  include: src/installer.nsh
+  createDesktopShortcut: true
 win:
   target: nsis
   icon: ./public/icons/app-icon.ico
   signtoolOptions:
     signingHashAlgorithms: []
-  publish:
-    - provider: github
-      owner: AnaD3v
-      repo: TestPassword
 mac:
   target: dmg
   icon: ./public/icons/app-icon.icns

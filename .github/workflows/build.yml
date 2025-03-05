@@ -1,0 +1,43 @@
+name: Build Electron App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform: [ubuntu-20.04, windows-latest, macos-latest]
+        # Aqui você define as plataformas para a construção do aplicativo.
+        # Você pode adicionar mais plataformas conforme necessário.
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'  # Certifique-se de usar a versão do Node.js compatível com o seu projeto.
+
+      - name: Install dependencies
+        run: |
+          npm install
+          
+      - name: Build Electron App
+        run: |
+          npm run dist
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: electron-builds
+          path: dist/*
+          # Faz o upload dos arquivos construídos para o GitHub Actions como artefatos
