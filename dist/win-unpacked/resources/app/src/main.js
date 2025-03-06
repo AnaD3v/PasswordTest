@@ -19,8 +19,8 @@ let win;
 
 function createWindow() {
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 700,
         webPreferences: {
             nodeIntegration: false,  // Habilita a integração do Node.js no renderer (não recomendado em produção por motivos de segurança)
             contextIsolation: true, // Habilita a comunicação entre o processo principal e o renderer (caso precise de IPC)
@@ -209,7 +209,7 @@ function startExpressServer() {
                     result.cookies.push({ stage: 'post-login', cookies: postLoginCookies });
 
                     // Verificar elementos de erro no login
-                    const errorSelector = '#conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
+                    const errorSelector = '#kc-content-wrapper > div.text-danger > span, #kc-content, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
                     const errorMessageElement = await page.waitForSelector(errorSelector, { visible: true, timeout: 5000 }).catch(() => null);
                     if (errorMessageElement) {
                         const errorText = await page.evaluate(el => el.textContent, errorMessageElement);
@@ -219,7 +219,7 @@ function startExpressServer() {
                     }
 
                     // Verificar elementos que indicam sucesso no login
-                    const successSelector = 'body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                    const successSelector = '#barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                     const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
 
                     if (successElement) {

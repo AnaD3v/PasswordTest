@@ -7,14 +7,16 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win",
+    "dist": "electron-builder --mac",
     "publish": "electron-builder --win --publish always"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "debug": "^4.4.0",
     "electron-log": "^5.3.1",
     "electron-updater": "^6.3.9",
     "express": "^4.21.2",
+    "minimatch": "^10.0.1",
     "puppeteer": "^24.3.1"
   },
   "devDependencies": {
@@ -26,33 +28,37 @@
     "productName": "PasswordTesting",
     "asar": false,
     "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "AnaD3v",
-        "repo": "PasswordTesting"
-      }
-    ],
+    "publish": null,
     "nsis": {
       "oneClick": true,
       "perMachine": false,
       "shortcutName": "PasswordTesting",
-      "include": "src/installer.nsh",
       "createDesktopShortcut": true
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        "nsis"
+      ],
       "icon": "./public/icons/app-icon.ico",
       "signtoolOptions": {
         "signingHashAlgorithms": []
       }
     },
     "mac": {
-      "target": "dmg",
-      "icon": "./public/icons/app-icon.icns"
+      "target": [
+        "dmg"
+      ],
+      "icon": "path/to/your/icon.icns",
+      "category": "public.app-category.utilities",
+      "extraResources": [
+        "path/to/your/resources"
+      ]
     },
     "linux": {
-      "target": "AppImage",
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
       "icon": "./public/icons/app-icon.png"
     },
     "directories": {

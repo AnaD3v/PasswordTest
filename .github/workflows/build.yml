@@ -10,21 +10,30 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    runs-on: ${{ matrix.platform }}
 
     strategy:
       matrix:
-        platform: [ubuntu-20.04, windows-latest, macos-latest]
-        # As plataformas para o build.
+        platform: [macos-latest]  # Plataformas para o build
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Node.js 
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: 20
+
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      - name: Remove node_modules and package-lock.json
+        run: |
+          if [[ $RUNNER_OS == 'Linux' || $RUNNER_OS == 'macOS' ]]; then
+            rm -rf node_modules package-lock.json
+          fi
 
       - name: Install dependencies
         run: |
@@ -34,8 +43,18 @@ jobs:
         run: |
           npm run dist
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+      - name: Compress Build
+        run: |
+          if [[ $RUNNER_OS == 'Linux' || $RUNNER_OS == 'macOS' ]]; then
+            tar -czf dist.tar.gz -C dist .  # Linux e macOS
+          fi
+
+      - name: Upload Electron Build
+        uses: actions/upload-artifact@v4
         with:
-          name: electron-builds
-          path: dist/*
+          name: electron-builds-${{ github.run_id }}-${{ github.sha }}  # Nome único para evitar conflito
+          path: dist.tar.gz
+          if-no-files-found: warn  # Avisar caso não haja arquivos encontrados
+          compression-level: 6  # Nível de compressão para o upload
+          overwrite: false  # Não sobrescrever artefatos com o mesmo nome
+          include-hidden-files: false  # Não incluir arquivos ocultos
