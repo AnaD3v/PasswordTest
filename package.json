@@ -33,9 +33,6 @@
       "node_modules/**/*",
       "package.json"
     ],
-    "x64ArchFiles": [
-      "node_modules/bare-fs/prebuilds/darwin-x64/**"
-    ],
     "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
     "publish": null,
     "nsis": {
