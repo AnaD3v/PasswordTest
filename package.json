@@ -7,7 +7,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --mac",
+    "dist": "electron-builder --mac --universal",
     "publish": "electron-builder --win --publish always"
   },
   "dependencies": {
@@ -21,12 +21,21 @@
   },
   "devDependencies": {
     "electron": "^35.0.0",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "electron-rebuild": "^3.2.9"
   },
   "build": {
     "appId": "com.seuapp.passwordtesting",
     "productName": "PasswordTesting",
-    "asar": false,
+    "asar": true,
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "x64ArchFiles": [
+      "node_modules/bare-fs/prebuilds/darwin-x64/**"
+    ],
     "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
     "publish": null,
     "nsis": {
@@ -48,11 +57,13 @@
       "target": [
         "dmg"
       ],
-      "icon": "path/to/your/icon.icns",
+      "icon": "./public/icons/app-icon.icns",
+      "type": "distribution",
       "category": "public.app-category.utilities",
-      "extraResources": [
-        "path/to/your/resources"
-      ]
+      "hardenedRuntime": true,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "extraResources": []
     },
     "linux": {
       "target": [
