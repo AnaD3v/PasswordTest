@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [mac-latest]  # Plataformas para o build
+        platform: [macos-13]  # Plataformas para o build
 
     steps:
       - name: Check out repository
