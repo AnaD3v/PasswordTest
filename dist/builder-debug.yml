@@ -12,6 +12,20 @@ x64:
     - '!.editorconfig'
     - '!.yarnrc.yml'
   nodeModuleFilePatterns: []
+arm64:
+  firstOrDefaultFilePatterns:
+    - '**/*'
+    - '!**/node_modules'
+    - '!build{,/**/*}'
+    - '!dist{,/**/*}'
+    - '!**/*.{iml,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,suo,xproj,cc,d.ts,mk,a,o,forge-meta,pdb}'
+    - '!**/._*'
+    - '!**/electron-builder.{yaml,yml,json,json5,toml,ts}'
+    - '!**/{.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,.DS_Store,thumbs.db,.gitignore,.gitkeep,.gitattributes,.npmignore,.idea,.vs,.flowconfig,.jshintrc,.eslintrc,.circleci,.yarn-integrity,.yarn-metadata.json,yarn-error.log,yarn.lock,package-lock.json,npm-debug.log,appveyor.yml,.travis.yml,circle.yml,.nyc_output,.husky,.github,electron-builder.env}'
+    - '!.yarn{,/**/*}'
+    - '!.editorconfig'
+    - '!.yarnrc.yml'
+  nodeModuleFilePatterns: []
 nsis:
   script: |-
     !include "C:\Users\Jusbrasil\AppData\Roaming\npm\node_modules\electron-builder\node_modules\app-builder-lib\templates\nsis\include\StdUtils.nsh"
@@ -87,8 +101,8 @@ nsis:
       !insertmacro MUI_LANGUAGE "Vietnamese"
     !macroend
 
+    !include "C:\Users\JUSBRA~1\AppData\Local\Temp\t-VppJ5r\0-messages.nsh"
     !addplugindir /x86-unicode "C:\Users\Jusbrasil\AppData\Local\electron-builder\Cache\nsis\nsis-resources-3.4.1\plugins\x86-unicode"
-    !include "C:\Users\JUSBRA~1\AppData\Local\Temp\t-ImCvoT\0-messages.nsh"
 
     Var newStartMenuLink
     Var oldStartMenuLink

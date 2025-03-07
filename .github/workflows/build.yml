@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [macos-latest]  # Plataformas para o build
+        platform: [mac-latest]  # Plataformas para o build
 
     steps:
       - name: Check out repository
@@ -41,7 +41,7 @@ jobs:
           
       - name: Build Electron App
         run: |
-          npm run dist
+          npm run dist -- --mac --universal
 
       - name: Compress Build
         run: |
@@ -52,9 +52,11 @@ jobs:
       - name: Upload Electron Build
         uses: actions/upload-artifact@v4
         with:
-          name: electron-builds-${{ github.run_id }}-${{ github.sha }}  # Nome único para evitar conflito
-          path: dist.tar.gz
-          if-no-files-found: warn  # Avisar caso não haja arquivos encontrados
-          compression-level: 6  # Nível de compressão para o upload
-          overwrite: false  # Não sobrescrever artefatos com o mesmo nome
-          include-hidden-files: false  # Não incluir arquivos ocultos
+          name: electron-builds-${{ github.run_id }}-${{ github.sha }}
+          path: |
+            dist/*.dmg
+            dist/*.zip
+          if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false

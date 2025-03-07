@@ -14,7 +14,6 @@ nsis:
 win:
   target:
     - nsis
-    - zip
   icon: ./public/icons/app-icon.ico
   signtoolOptions:
     signingHashAlgorithms: []
