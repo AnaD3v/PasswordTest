@@ -47,9 +47,7 @@
       "target": [
         "dmg"
       ],
-      "x64ArchFiles": [
-      "node_modules/bare-fs/prebuilds/darwin-arm64/bare-fs.bare"
-      ],
+      "arch": ["universal"],
       "icon": "./public/icons/app-icon.icns",
       "type": "distribution",
       "category": "public.app-category.utilities",
