@@ -47,8 +47,8 @@ function createWindow() {
 
     console.log('Ícone do aplicativo:', path.resolve(__dirname, 'public/icons/app-icon.ico'));
 
-    // Certifique-se de carregar o arquivo HTML corretamente
-    win.loadFile(path.join(__dirname, '../public/index.html')); // Carrega o arquivo HTML
+    win.loadFile(path.join(__dirname, '../public/index.html'));
+
 }
 
 function startAutoUpdater() {
