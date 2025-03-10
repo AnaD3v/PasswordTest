@@ -32,8 +32,7 @@
     "files": [
       "src/**/*",
       "node_modules/**/*",
-      "package.json",
-      "!node_modules/bare-fs/prebuilds/**"
+      "package.json"
     ],
     "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
     "publish": null,
@@ -62,7 +61,8 @@
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
-      "extraResources": []
+      "extraResources": [],
+      "x64ArchFiles": ["node_modules/bare-fs/prebuilds/darwin-arm64/bare-fs.bare"]
     },
     "linux": {
       "target": [
