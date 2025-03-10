@@ -3,7 +3,12 @@ directories:
   buildResources: build
 appId: com.seuapp.passwordtesting
 productName: PasswordTesting
-asar: false
+asar: true
+files:
+  - filter:
+      - src/**/*
+      - node_modules/**/*
+      - package.json
 asarUnpack: '**/*.{exe,dll,bin,so,dmg}'
 publish: null
 nsis:
@@ -20,14 +25,16 @@ win:
 mac:
   target:
     - dmg
-  icon: path/to/your/icon.icns
+  icon: ./public/icons/app-icon.icns
+  type: distribution
   category: public.app-category.utilities
-  extraResources:
-    - path/to/your/resources
+  hardenedRuntime: true
+  entitlements: entitlements.mac.plist
+  entitlementsInherit: entitlements.mac.plist
+  extraResources: []
 linux:
   target:
     - AppImage
     - tar.gz
   icon: ./public/icons/app-icon.png
-files: []
 electronVersion: 35.0.0

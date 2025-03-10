@@ -5,17 +5,33 @@ import puppeteer from 'puppeteer';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import os from 'os';  // Para detectar o sistema operacional
-import { promises as fs } from 'fs';  // Para trabalhar com promessas no sistema de arquivos
-import log from 'electron-log';  // Importando o electron-log
+import os from 'os';
+import { promises as fs } from 'fs';
+import log from 'electron-log';
 import pkg from 'electron-updater';
+
 const { autoUpdater } = pkg;
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 let win;
+
+// 🔹 Função para enviar logs para o servidor remoto
+async function sendLogToServer(message) {
+    try {
+        await fetch('http://localhost:4000/logs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ log: message }),
+        });
+    } catch (error) {
+        console.error('Erro ao enviar log:', error.message);
+    }
+}
+
+// 🔹 Hook para capturar e enviar logs automaticamente
+log.hooks.push((message) => {
+    sendLogToServer(message);
+});
 
 function createWindow() {
     win = new BrowserWindow({
@@ -95,7 +111,6 @@ app.whenReady().then(() => {
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
-
 // Função para iniciar o servidor Express
 function startExpressServer() {
     const app = express();

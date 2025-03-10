@@ -58,11 +58,9 @@ function showAutocompleteSuggestions(suggestions) {
     });
 }
 
-
 // Função para lidar com o input do usuário e filtrar os sites disponíveis
 document.getElementById('url-input').addEventListener('input', function () {
     const inputValue = this.value.toLowerCase();
-
     // Filtra os sites pela URL
     const matches = predefinedSites.filter(site => site.url.toLowerCase().includes(inputValue));
 
@@ -122,20 +120,29 @@ function removeChip(siteUrl) {
     updateChipsList(); // Atualiza a lista de chips após remoção
 }
 
-
-
 // Função para executar o login com múltiplos sites
 async function executeLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const usernameField = document.getElementById('username');
+    const passwordField = document.getElementById('password');
+    const urlInputField = document.getElementById('url-input');
+
+    // Desabilita os campos enquanto o login está sendo processado
+    usernameField.disabled = true;
+    passwordField.disabled = true;
+    urlInputField.disabled = true;
+
+    const username = usernameField.value;
+    const password = passwordField.value;
 
     if (selectedSites.length === 0) {
         alert('Por favor, selecione ao menos um tribunal.');
+        resetInputFields();
         return;
     }
 
     if (!username || !password) {
         alert('Por favor, preencha os campos de usuário e senha!');
+        resetInputFields();
         return;
     }
 
@@ -169,5 +176,20 @@ async function executeLogin() {
     } catch (error) {
         console.error('Erro ao executar login:', error);
         document.getElementById('result').innerText = `Erro: ${error.message}`;
+    } finally {
+        // Garantir que os campos sejam reabilitados após o login (seja bem-sucedido ou com erro)
+        resetInputFields();
     }
+}
+
+function resetInputFields() {
+    const usernameField = document.getElementById('username');
+    const passwordField = document.getElementById('password');
+    const urlInputField = document.getElementById('url-input');
+
+    // Reabilitar os campos
+    usernameField.disabled = false;
+    passwordField.disabled = false;
+    urlInputField.disabled = false;
+    console.log("Campos reabilitados.");
 }
