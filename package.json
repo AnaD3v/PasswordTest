@@ -8,7 +8,7 @@
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder --mac --universal",
-    "publish": "electron-builder --win --publish always"
+    "publish": "electron-builder --win"
   },
   "dependencies": {
     "cors": "^2.8.5",
