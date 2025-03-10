@@ -60,9 +60,7 @@
       "category": "public.app-category.utilities",
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist",
-      "mergeASARs": false,
-      "x64ArchFiles": null
+      "entitlementsInherit": "entitlements.mac.plist"
     },
     "linux": {
       "target": [
