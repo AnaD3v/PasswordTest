@@ -62,7 +62,8 @@
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "extraResources": [],
-      "x64ArchFiles": ["node_modules/bare-fs/prebuilds/darwin-arm64/bare-fs.bare"]
+      "mergeASARs": true,
+      "x64ArchFiles": "node_modules/bare-fs/prebuilds/darwin-arm64/bare-fs.bare"
     },
     "linux": {
       "target": [
