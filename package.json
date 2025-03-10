@@ -11,7 +11,6 @@
     "publish": "electron-builder --win --publish always"
   },
   "dependencies": {
-    "bare-fs": "^4.0.1",
     "cors": "^2.8.5",
     "debug": "^4.4.0",
     "electron-log": "^5.3.2",
