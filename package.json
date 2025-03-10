@@ -27,20 +27,18 @@
   "build": {
     "appId": "com.seuapp.passwordtesting",
     "productName": "PasswordTesting",
-    "asar": false,
+    "asar": true,
+    "asarUnpack": [
+      "**/*.node",
+      "**/bare-fs.bare",
+      "**/bare-os.bare",
+      "**/express/**/*"
+    ],
     "files": [
       "src/**/*",
       "node_modules/**/*",
       "package.json"
     ],
-    "asarUnpack": "**/*.{exe,dll,bin,so,dmg}",
-    "publish": null,
-    "nsis": {
-      "oneClick": true,
-      "perMachine": false,
-      "shortcutName": "PasswordTesting",
-      "createDesktopShortcut": true
-    },
     "win": {
       "target": [
         "nsis"
