@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [macos-13]  # Plataformas para o build
+        platform: [macos-latest]  # Plataformas para o build
 
     steps:
       - name: Check out repository
@@ -41,7 +41,7 @@ jobs:
           
       - name: Build Electron App
         run: |
-          npm run dist -- --mac --x64
+          sudo npm run dist -- --mac --arm64
 
       - name: Compress Build
         run: |

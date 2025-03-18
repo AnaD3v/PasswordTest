@@ -7,7 +7,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --mac --x64"
+    "dist": "electron-builder --mac --arm64"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -48,7 +48,7 @@
         {
           "target": "dmg",
           "arch": [
-            "x64"
+            "arm64"
           ]
         }
       ],
