@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let win;
 
-// 🔹 Função para enviar logs para o servidor remoto
+// Função para enviar logs para o servidor remoto
 async function sendLogToServer(message) {
     try {
         await fetch('http://localhost:4000/logs', {
@@ -28,7 +28,7 @@ async function sendLogToServer(message) {
     }
 }
 
-// 🔹 Hook para capturar e enviar logs automaticamente
+// Hook para capturar e enviar logs automaticamente
 log.hooks.push((message) => {
     sendLogToServer(message);
 });
@@ -38,11 +38,11 @@ function createWindow() {
         width: 1200,
         height: 700,
         webPreferences: {
-            nodeIntegration: false,  // Habilita a integração do Node.js no renderer (não recomendado em produção por motivos de segurança)
+            nodeIntegration: false,  // Habilita a integração do node.js no renderer
             contextIsolation: true, // Habilita a comunicação entre o processo principal e o renderer (caso precise de IPC)
             icon: path.resolve(__dirname, 'public/icons/app-icon.ico')
         },
-        
+
     });
 
     console.log('Ícone do aplicativo:', path.resolve(__dirname, 'public/icons/app-icon.ico'));
@@ -55,7 +55,7 @@ function startAutoUpdater() {
     // Definir o nível de log
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    
+
     autoUpdater.on('checking-for-update', () => {
         log.info('Verificando atualizações...');
     });
@@ -119,52 +119,82 @@ function startExpressServer() {
     // Servir arquivos estáticos da pasta 'public'
     app.use(express.static(path.join(__dirname, 'public')));
 
+    async function getChromePath() {
+        // Obtém o sistema operacional do usuário
+        const platform = os.platform();
+        let possiblePaths = [];
+    
+        // Define possíveis caminhos do Chrome dependendo do sistema operacional
+        if (platform === 'win32') {
+            possiblePaths = [
+                'C:/Program Files/Google/Chrome/Application/chrome.exe',
+                'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+                'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
+            ];
+        } else if (platform === 'darwin') {
+            possiblePaths = ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'];
+        } else if (platform === 'linux') {
+            possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
+        }
+    
+        // Verifica se algum dos caminhos definidos realmente existe no sistema
+        for (const path of possiblePaths) {
+            if (await fs.access(path).then(() => true).catch(() => false)) {
+                return path; // Retorna o caminho do Chrome se encontrado
+            }
+        }
+    
+        try {
+            let chromePath = '';
+    
+            // Para Windows, tenta encontrar o Chrome dinamicamente com o comando 'where'
+            if (platform === 'win32') {
+                chromePath = execSync('where chrome').toString().split('\n')[0].trim();
+            } else {
+                // Para macOS e Linux, utiliza o comando 'which'
+                chromePath = execSync('which google-chrome').toString().trim();
+            }
+    
+            // Verifica se o caminho encontrado realmente existe e retorna
+            if (chromePath && await fs.access(chromePath).then(() => true).catch(() => false)) {
+                return chromePath;
+            }
+        } catch (error) {
+            console.error('Erro ao buscar Chrome dinamicamente:', error.message);
+        }
+    
+        // Se nenhum caminho válido for encontrado, lança um erro
+        throw new Error('Google Chrome não encontrado no sistema!');
+    }
+    
+    // Define uma rota POST para o endpoint '/login'
     app.post('/login', async (req, res) => {
         console.log('Requisição recebida:', req.body);
-
+    
+        // Extrai os dados do corpo da requisição
         const { sites, username, password } = req.body;
         const results = [];
         let browser;
-
+    
         try {
-            // Detectar o sistema operacional
-            const platform = os.platform();
-            let chromePath = '';
-
-            // Definir o caminho do Chrome com base no sistema operacional
-            if (platform === 'win32') {
-                chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-                if (!(await fs.access(chromePath).then(() => true).catch(() => false))) {
-                    chromePath = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe';
-                }
-            } else if (platform === 'darwin') {
-                chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-            } else if (platform === 'linux') {
-                chromePath = '/usr/bin/google-chrome';
-                if (!(await fs.access(chromePath).then(() => true).catch(() => false))) {
-                    chromePath = '/opt/google/chrome/chrome';
-                }
-            }
-
-            if (!chromePath || !(await fs.access(chromePath).then(() => true).catch(() => false))) {
-                throw new Error('Google Chrome não encontrado no caminho especificado!');
-            }
-
+            // Obtém o caminho do Chrome no sistema
+            const chromePath = await getChromePath();
             console.log('Google Chrome encontrado em:', chromePath);
-
+            
+            // Inicializa o navegador com o caminho do Chrome
             browser = await puppeteer.launch({
                 executablePath: chromePath,
-                headless: false,            // Modo não headless (com interface gráfica)
+                headless: false,
                 ignoreDefaultArgs: ['--disable-extensions'],
             });
-
+    
             console.log('Chrome aberto com o perfil do Chrome');
-
+            
             for (let site of sites) {
                 let result = { site: site.title, success: false, message: '', cookies: [] };
                 let page;
 
-                const siteTimeout = site.timeout || 30000;
+                const siteTimeout = site.timeout || 20000;
 
                 try {
                     page = await browser.newPage();
@@ -183,40 +213,49 @@ function startExpressServer() {
                     // Navegar para o site
                     await page.goto(site.url, { timeout: siteTimeout, waitUntil: 'networkidle2' });
 
+                    // Verificar se há redirecionamentos ou mudanças de URL                
+                    console.log(`URL atual após carregamento: ${page.url()}`);
+
+
                     // Capturar cookies iniciais
                     const initialCookies = await page.cookies();
                     console.log('Cookies iniciais:', JSON.stringify(initialCookies, null, 2));
                     result.cookies.push({ stage: 'initial', cookies: initialCookies });
 
+                    let context = page; // Começa assumindo que o login está na página principal
                     let iframe = null;
+
                     try {
-                        const iframeElement = await page.waitForSelector('iframe', { visible: true, timeout: 2000 }).catch(() => null);
+                        const iframeElement = await page.waitForSelector('iframe', { visible: true, timeout: 5000 }).catch(() => null);
                         if (iframeElement) {
-                            iframe = await iframeElement.contentFrame();
-                            console.log(`Iframe encontrado no site: ${site.title}`);
+                            const tempIframe = await iframeElement.contentFrame();
+                            if (tempIframe) {
+                                context = tempIframe;
+                                console.log(`Iframe encontrado e acessível no site: ${site.title}`);
+                            } else {
+                                console.log(`Iframe encontrado, mas inacessível. Usando página principal.`);
+                            }
                         } else {
-                            console.log(`Nenhum iframe encontrado no site: ${site.title}`);
+                            console.log(`Nenhum iframe encontrado no site.`);
                         }
                     } catch (error) {
-                        console.log(`Erro ao procurar iframe no site ${site.title}:`, error.message);
+                        console.log(`Erro ao procurar iframe:`, error.message);
                     }
-
-                    // Selecionar o contexto correto (iframe ou página principal)
-                    const context = iframe || page;
-
+                    
                     // Preencher login e senha
-                    await context.waitForSelector('#txtUsuario, #username', { visible: true });
-                    await context.type('#txtUsuario, input#username, #username', username);
+                    await context.waitForSelector('#usernameForm, #txtUsuario, #username', { visible: true });
+                    await context.type('#usernameForm, #txtUsuario, input#username, #username', username);
 
-                    await context.waitForSelector('#pwdSenha, #password', { visible: true });
-                    await context.type('#pwdSenha, input#password', password);
+                    await context.waitForSelector('#passwordForm, #pwdSenha, #password', { visible: true });
+                    await context.type('#passwordForm, #pwdSenha, input#password, #password', password);
 
                     // Clicar no botão de login
-                    await context.waitForSelector('#sbmEntrar, #btnEntrar, #kc-login', { visible: true });
-                    await context.click('#sbmEntrar, #btnEntrar, #kc-login');
+                    await context.waitForSelector('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login', { visible: true });
+                    await context.click('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login');
 
                     // Esperar pela navegação pós-login
                     await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
+
 
                     // Capturar cookies pós-login
                     const postLoginCookies = await page.cookies();
@@ -224,7 +263,7 @@ function startExpressServer() {
                     result.cookies.push({ stage: 'post-login', cookies: postLoginCookies });
 
                     // Verificar elementos de erro no login
-                    const errorSelector = '#kc-content-wrapper > div.text-danger > span, #kc-content, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
+                    const errorSelector = '#mensagemRetorno, #loginForm > div > div:nth-child(1) > div > div:nth-child(4) > div > div, #kc-content-wrapper > div.text-danger > span, #kc-content, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
                     const errorMessageElement = await page.waitForSelector(errorSelector, { visible: true, timeout: 5000 }).catch(() => null);
                     if (errorMessageElement) {
                         const errorText = await page.evaluate(el => el.textContent, errorMessageElement);
@@ -234,7 +273,7 @@ function startExpressServer() {
                     }
 
                     // Verificar elementos que indicam sucesso no login
-                    const successSelector = '#barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                    const successSelector = '#btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                     const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
 
                     if (successElement) {

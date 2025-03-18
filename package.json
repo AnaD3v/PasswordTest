@@ -7,7 +7,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --mac --universal"
+    "dist": "electron-builder --mac --x64"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,7 +16,7 @@
     "electron-updater": "^6.3.9",
     "express": "^4.21.2",
     "minimatch": "^10.0.1",
-    "puppeteer": "^24.3.1"
+    "puppeteer": "^24.4.0"
   },
   "devDependencies": {
     "electron": "^35.0.0",
@@ -47,7 +47,6 @@
       "target": [
         "dmg"
       ],
-      "arch": ["universal"],
       "icon": "./public/icons/app-icon.icns",
       "type": "distribution",
       "category": "public.app-category.utilities",

@@ -2,8 +2,8 @@
     {
         "url": "https://sistemas.stf.jus.br/cas/login",
         "title": "STF-PROP-2G",
-        "loginSelector": "input#username",
-        "passwordSelector": "input#password"
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
     },
     {
         "url": "https://cpe.web.stj.jus.br/#/",
@@ -170,6 +170,12 @@
     {
         "url": "https://pje.tjpa.jus.br/pje/login.seam",
         "title": "TJPA-PJE-1G",
+        "loginSelector": "#username",
+        "passwordSelector": "#password"
+    },
+    {
+        "url": "https://pje.tjpa.jus.br/pje-2g/login.seam",
+        "title": "TJPA-PJE-2G",
         "loginSelector": "#username",
         "passwordSelector": "#password"
     },
@@ -452,12 +458,6 @@
     {
         "url": "https://pje.trt13.jus.br/segundograu/login.seam",
         "title": "TRT13-PJE-2G",
-        "loginSelector": "input#username",
-        "passwordSelector": "input#password"
-    },
-    {
-        "url": "https://www.trt13.jus.br/portalservicos/login/login.jsf",
-        "title": "TRT13-PROP-1G",
         "loginSelector": "input#username",
         "passwordSelector": "input#password"
     },
