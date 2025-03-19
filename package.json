@@ -48,17 +48,26 @@
         {
           "target": "dmg",
           "arch": [
-            "universal"
-          ]
+            "x64",
+            "arm64"
+          ],
+          "files": [
+            "**/*",
+            "!**/bare-fs/prebuilds/darwin-x64/*",
+            "!**/bare-fs/prebuilds/darwin-arm64/*"
+          ],
+          "x64ArchFiles": {
+            "bare-fs": "prebuilds/darwin-x64/*"
+          },
+          "icon": "./public/icons/app-icon.icns",
+          "type": "distribution",
+          "category": "public.app-category.utilities",
+          "hardenedRuntime": true,
+          "entitlements": "entitlements.mac.plist",
+          "entitlementsInherit": "entitlements.mac.plist",
+          "extraResources": []
         }
-      ],
-      "icon": "./public/icons/app-icon.icns",
-      "type": "distribution",
-      "category": "public.app-category.utilities",
-      "hardenedRuntime": true,
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist",
-      "extraResources": []
+      ]
     },
     "linux": {
       "target": [
