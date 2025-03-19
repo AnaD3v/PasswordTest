@@ -47,10 +47,7 @@
       "target": [
         "dmg"
       ],
-      "arch": [
-        "x64",
-        "arm64"
-      ],
+      "defaultArch": "x64",
       "icon": "./public/icons/app-icon.icns",
       "category": "public.app-category.utilities",
       "hardenedRuntime": true,
