@@ -54,9 +54,7 @@
       "entitlements": "entitlements.mac.plist",
       "extraResources": [],
       "publish": null,
-      "x64ArchFiles": {
-        "bare-fs": "prebuilds/darwin-x64/*"
-      }
+      "x64ArchFiles": "**/bare-fs/prebuilds/darwin-x64/*"
     },
     "linux": {
       "target": [
