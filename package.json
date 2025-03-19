@@ -53,7 +53,10 @@
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "extraResources": [],
-      "publish": null
+      "publish": null,
+      "x64ArchFiles": {
+        "bare-fs": "prebuilds/darwin-x64/*"
+      }
     },
     "linux": {
       "target": [
