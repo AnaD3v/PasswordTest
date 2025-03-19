@@ -56,7 +56,7 @@
       "publish": null,
       "x64ArchFiles": "**/bare-fs/prebuilds/darwin-x64/*"
     },
-    "linux": {
+    "linux": { 
       "target": [
         "AppImage",
         "tar.gz"
