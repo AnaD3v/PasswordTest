@@ -41,7 +41,7 @@ jobs:
           
       - name: Build Electron App
         run: |
-          sudo npm run dist -- --mac --universal
+          sudo npm run dist -- --mac --x64
 
       - name: Compress Build
         run: |
