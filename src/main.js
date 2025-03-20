@@ -123,7 +123,7 @@ function startExpressServer() {
         // Obtém o sistema operacional do usuário
         const platform = os.platform();
         let possiblePaths = [];
-    
+
         // Define possíveis caminhos do Chrome dependendo do sistema operacional
         if (platform === 'win32') {
             possiblePaths = [
@@ -132,21 +132,30 @@ function startExpressServer() {
                 'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
             ];
         } else if (platform === 'darwin') {
-            possiblePaths = ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'];
+            possiblePaths = [
+                '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                '/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/Contents/MacOS/Google Chrome',
+                path.join(os.homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+                '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+                '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta',
+                '/Applications/Google Chrome Dev.app/Contents/MacOS/Google Chrome Dev',
+                '/opt/local/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                path.join(os.homedir(), 'Library/Mobile Documents/com~apple~CloudDocs/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+            ];
         } else if (platform === 'linux') {
             possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
         }
-    
+
         // Verifica se algum dos caminhos definidos realmente existe no sistema
         for (const path of possiblePaths) {
             if (await fs.access(path).then(() => true).catch(() => false)) {
                 return path; // Retorna o caminho do Chrome se encontrado
             }
         }
-    
+
         try {
             let chromePath = '';
-    
+
             // Para Windows, tenta encontrar o Chrome dinamicamente com o comando 'where'
             if (platform === 'win32') {
                 chromePath = execSync('where chrome').toString().split('\n')[0].trim();
@@ -154,7 +163,7 @@ function startExpressServer() {
                 // Para macOS e Linux, utiliza o comando 'which'
                 chromePath = execSync('which google-chrome').toString().trim();
             }
-    
+
             // Verifica se o caminho encontrado realmente existe e retorna
             if (chromePath && await fs.access(chromePath).then(() => true).catch(() => false)) {
                 return chromePath;
@@ -162,34 +171,34 @@ function startExpressServer() {
         } catch (error) {
             console.error('Erro ao buscar Chrome dinamicamente:', error.message);
         }
-    
+
         // Se nenhum caminho válido for encontrado, lança um erro
         throw new Error('Google Chrome não encontrado no sistema!');
     }
-    
+
     // Define uma rota POST para o endpoint '/login'
     app.post('/login', async (req, res) => {
         console.log('Requisição recebida:', req.body);
-    
+
         // Extrai os dados do corpo da requisição
         const { sites, username, password } = req.body;
         const results = [];
         let browser;
-    
+
         try {
             // Obtém o caminho do Chrome no sistema
             const chromePath = await getChromePath();
             console.log('Google Chrome encontrado em:', chromePath);
-            
+
             // Inicializa o navegador com o caminho do Chrome
             browser = await puppeteer.launch({
                 executablePath: chromePath,
                 headless: false,
                 ignoreDefaultArgs: ['--disable-extensions'],
             });
-    
+
             console.log('Chrome aberto com o perfil do Chrome');
-            
+
             for (let site of sites) {
                 let result = { site: site.title, success: false, message: '', cookies: [] };
                 let page;
@@ -241,7 +250,7 @@ function startExpressServer() {
                     } catch (error) {
                         console.log(`Erro ao procurar iframe:`, error.message);
                     }
-                    
+
                     // Preencher login e senha
                     await context.waitForSelector('#usernameForm, #txtUsuario, #username', { visible: true });
                     await context.type('#usernameForm, #txtUsuario, input#username, #username', username);
@@ -273,7 +282,7 @@ function startExpressServer() {
                     }
 
                     // Verificar elementos que indicam sucesso no login
-                    const successSelector = '#btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                    const successSelector = '#btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                     const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
 
                     if (successElement) {
@@ -281,6 +290,14 @@ function startExpressServer() {
                         result.message = 'Login bem-sucedido!';
                     } else {
                         result.message = 'Falha no login: Não foi possível verificar o sucesso.';
+                    }
+
+                    const twoFactor = '#btnValidar';
+                    const twoFactorElement = await page.waitForSelector(twoFactor, { visible: true, timeout: siteTimeout }).catch(() => null);
+
+                    if (twoFactorElement) {
+                        result.success = true;
+                        result.message = 'Autenticação em 2 fatores ativada.';
                     }
 
                     results.push(result);

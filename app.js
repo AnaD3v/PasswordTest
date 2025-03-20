@@ -22,22 +22,31 @@ const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public'))); // Serve arquivos estáticos da pasta "public"
 
 async function getChromePath() {
-    // Obtém o sistema operacional do usuário
-    const platform = os.platform();
-    let possiblePaths = [];
+        // Obtém o sistema operacional do usuário
+        const platform = os.platform();
+        let possiblePaths = [];
 
-    // Define possíveis caminhos do Chrome dependendo do sistema operacional
-    if (platform === 'win32') {
-        possiblePaths = [
-            'C:/Program Files/Google/Chrome/Application/chrome.exe',
-            'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-            'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
-        ];
-    } else if (platform === 'darwin') {
-        possiblePaths = ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'];
-    } else if (platform === 'linux') {
-        possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
-    }
+        // Define possíveis caminhos do Chrome dependendo do sistema operacional
+        if (platform === 'win32') {
+            possiblePaths = [
+                'C:/Program Files/Google/Chrome/Application/chrome.exe',
+                'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+                'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
+            ];
+        } else if (platform === 'darwin') {
+            possiblePaths = [
+                '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                '/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/Contents/MacOS/Google Chrome',
+                path.join(os.homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+                '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+                '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta',
+                '/Applications/Google Chrome Dev.app/Contents/MacOS/Google Chrome Dev',
+                '/opt/local/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                path.join(os.homedir(), 'Library/Mobile Documents/com~apple~CloudDocs/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+            ];
+        } else if (platform === 'linux') {
+            possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
+        }
 
     // Verifica se algum dos caminhos definidos realmente existe no sistema
     for (const path of possiblePaths) {
@@ -156,23 +165,23 @@ app.post('/login', async (req, res) => {
                 // Aguarda a navegação pós-login
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
 
-                // Captura cookies após login
+                // Capturar cookies pós-login
                 const postLoginCookies = await page.cookies();
                 console.log('Cookies pós-login:', JSON.stringify(postLoginCookies, null, 2));
                 result.cookies.push({ stage: 'post-login', cookies: postLoginCookies });
 
-                // Verifica se houve erro no login
-                const errorSelector = '.error-message, .alert-danger, .invalid-feedback';
+                // Verificar elementos de erro no login
+                const errorSelector = '#mensagemRetorno, #loginForm > div > div:nth-child(1) > div > div:nth-child(4) > div > div, #kc-content-wrapper > div.text-danger > span, #kc-content, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
                 const errorMessageElement = await page.waitForSelector(errorSelector, { visible: true, timeout: 5000 }).catch(() => null);
                 if (errorMessageElement) {
                     const errorText = await page.evaluate(el => el.textContent, errorMessageElement);
-                    result.message = `Erro: ${errorText.trim()}`;
+                    result.message = `${errorText.trim()}`;
                     results.push(result);
                     continue;
                 }
 
-                // Verifica se o login foi bem-sucedido
-                const successSelector = '.dashboard, .user-profile, .logout-button';
+                // Verificar elementos que indicam sucesso no login
+                const successSelector = '#btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                 const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
 
                 if (successElement) {
@@ -180,6 +189,14 @@ app.post('/login', async (req, res) => {
                     result.message = 'Login bem-sucedido!';
                 } else {
                     result.message = 'Falha no login: Não foi possível verificar o sucesso.';
+                }
+
+                const twoFactor = '#btnValidar';
+                const twoFactorElement = await page.waitForSelector(twoFactor, { visible: true, timeout: siteTimeout }).catch(() => null);
+
+                if (twoFactorElement) {
+                    result.success = true;
+                    result.message = 'Autenticação em 2 fatores ativada.';
                 }
 
                 results.push(result);
