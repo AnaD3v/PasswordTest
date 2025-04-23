@@ -31,7 +31,7 @@ function showAutocompleteSuggestions(suggestions) {
         suggestionBox.style.position = 'absolute';
         suggestionBox.style.backgroundColor = '#fff';
         suggestionBox.style.border = '1px solid #ccc';
-        suggestionBox.style.maxHeight = '150px';
+        suggestionBox.style.maxHeight = '450px';
         suggestionBox.style.overflowY = 'auto';
         suggestionBox.style.width = `${inputField.offsetWidth}px`; // Define a largura igual ao input
         suggestionBox.style.zIndex = '1000'; // Garante que fique acima de outros elementos
@@ -42,7 +42,7 @@ function showAutocompleteSuggestions(suggestions) {
 
     // Posiciona a caixinha logo abaixo do campo de entrada
     const rect = inputField.getBoundingClientRect();
-    suggestionBox.style.top = `${rect.bottom + window.scrollY + 78}px`; // Move mais para baixo
+    suggestionBox.style.top = `${rect.bottom + window.scrollY + 227}px`; // Move mais para baixo
     suggestionBox.style.left = `${rect.left + window.scrollX + 210}px`; // Move mais para a direita
 
     suggestions.slice(0, 400).forEach(site => { // Limita a 400 sugestões visíveis
