@@ -23,6 +23,8 @@ let selectedSites = []; // Para armazenar os sites selecionados
 // Função para mostrar sugestões de autocomplete para o input de URL
 function showAutocompleteSuggestions(suggestions) {
     let suggestionBox = document.getElementById('suggestions');
+    let inputField = document.getElementById('url-input');
+
     if (!suggestionBox) {
         suggestionBox = document.createElement('div');
         suggestionBox.id = 'suggestions';
@@ -31,39 +33,67 @@ function showAutocompleteSuggestions(suggestions) {
         suggestionBox.style.border = '1px solid #ccc';
         suggestionBox.style.maxHeight = '150px';
         suggestionBox.style.overflowY = 'auto';
+        suggestionBox.style.width = `${inputField.offsetWidth}px`; // Define a largura igual ao input
+        suggestionBox.style.zIndex = '1000'; // Garante que fique acima de outros elementos
         document.body.appendChild(suggestionBox);
     } else {
         suggestionBox.innerHTML = ''; // Limpa sugestões anteriores
     }
 
-    suggestions.forEach(site => {
+    // Posiciona a caixinha logo abaixo do campo de entrada
+    const rect = inputField.getBoundingClientRect();
+    suggestionBox.style.top = `${rect.bottom + window.scrollY + 78}px`; // Move mais para baixo
+    suggestionBox.style.left = `${rect.left + window.scrollX + 210}px`; // Move mais para a direita
+
+    suggestions.slice(0, 400).forEach(site => { // Limita a 400 sugestões visíveis
         const suggestionItem = document.createElement('div');
         suggestionItem.textContent = site.title; // Exibe apenas o título
         suggestionItem.style.padding = '5px 10px';
         suggestionItem.style.cursor = 'pointer';
+        suggestionItem.style.backgroundColor = selectedSites.some(s => s.url === site.url) ? '#ddd' : '#fff';
         suggestionItem.addEventListener('click', () => {
-            document.getElementById('url-input').value = ''; // Limpa a URL ao selecionar um título
             addChip(site); // Adiciona o site à lista de chips
-
-            // Adiciona um pequeno atraso antes de remover o suggestionBox
-            setTimeout(() => suggestionBox.remove(), 100);
+            updateSuggestionsUI();
         });
         suggestionBox.appendChild(suggestionItem);
     });
 
-    // Remove o suggestionBox quando o input perde o foco
-    const inputField = document.getElementById('url-input');
-    inputField.addEventListener('blur', () => {
-        setTimeout(() => suggestionBox.remove(), 200); // Delay para evitar conflitos
+    document.addEventListener('click', (event) => {
+        if (!suggestionBox.contains(event.target) && event.target.id !== 'url-input') {
+            suggestionBox.style.display = 'none';
+        }
     });
+
+    suggestionBox.style.display = 'block'; // Garante que a caixinha reapareça
+}
+
+function updateSuggestionsUI() {
+    let suggestionBox = document.getElementById('suggestions');
+    if (suggestionBox) {
+        suggestionBox.childNodes.forEach(item => {
+            if (selectedSites.some(s => s.title === item.textContent)) {
+                item.style.backgroundColor = '#ddd';
+            } else {
+                item.style.backgroundColor = '#fff';
+            }
+        });
+    }
 }
 
 // Função para lidar com o input do usuário e filtrar os sites disponíveis
 document.getElementById('url-input').addEventListener('input', function () {
     const inputValue = this.value.toLowerCase();
-    // Filtra os sites pela URL
-    const matches = predefinedSites.filter(site => site.url.toLowerCase().includes(inputValue));
+    // Filtra os sites considerando traços e espaços
+    const matches = predefinedSites.filter(site => site.url.toLowerCase().replace(/[-\s]/g, '').includes(inputValue.replace(/[-\s]/g, '')));
 
+    if (matches.length > 0) {
+        showAutocompleteSuggestions(matches);
+    }
+});
+
+document.getElementById('url-input').addEventListener('focus', function () {
+    const inputValue = this.value.toLowerCase();
+    const matches = predefinedSites.filter(site => site.url.toLowerCase().replace(/[-\s]/g, '').includes(inputValue.replace(/[-\s]/g, '')));
     if (matches.length > 0) {
         showAutocompleteSuggestions(matches);
     }
@@ -75,7 +105,21 @@ function addChip(site) {
     if (!selectedSites.some(s => s.url === site.url)) {
         selectedSites.push(site);
         updateChipsList();
+        updateSuggestionsUI();
     }
+}
+
+// Função para limpar os campos e remover todos os chips
+function clearFields() {
+    // Limpa os campos de URL, username e password
+    document.getElementById('url-input').value = '';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('result').innerText = ''; // Limpa a mensagem de resultado
+
+    // Limpa a lista de chips (sites selecionados)
+    selectedSites = [];
+    updateChipsList();
 }
 
 function updateChipsList() {
@@ -101,23 +145,11 @@ function updateChipsList() {
     placeholder.style.display = selectedSites.length === 0 ? 'block' : 'none';
 }
 
-// Função para limpar os campos e remover todos os chips
-function clearFields() {
-    // Limpa os campos de URL, username e password
-    document.getElementById('url-input').value = '';
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('result').innerText = ''; // Limpa a mensagem de resultado
-
-    // Limpa a lista de chips (sites selecionados)
-    selectedSites = [];
-    updateChipsList();
-}
-
 // Função para remover chips (sites) da lista
 function removeChip(siteUrl) {
     selectedSites = selectedSites.filter(s => s.url !== siteUrl);
     updateChipsList(); // Atualiza a lista de chips após remoção
+    updateSuggestionsUI();
 }
 
 // Função para executar o login com múltiplos sites

@@ -9,6 +9,7 @@ import os from 'os';
 import { promises as fs } from 'fs';
 import log from 'electron-log';
 import pkg from 'electron-updater';
+import { Tray, Menu } from 'electron';
 
 const { autoUpdater } = pkg;
 const __filename = fileURLToPath(import.meta.url);
@@ -232,7 +233,6 @@ function startExpressServer() {
                     result.cookies.push({ stage: 'initial', cookies: initialCookies });
 
                     let context = page; // Começa assumindo que o login está na página principal
-                    let iframe = null;
 
                     try {
                         const iframeElement = await page.waitForSelector('iframe', { visible: true, timeout: 5000 }).catch(() => null);
@@ -251,19 +251,46 @@ function startExpressServer() {
                         console.log(`Erro ao procurar iframe:`, error.message);
                     }
 
-                    // Preencher login e senha
-                    await context.waitForSelector('#usernameForm, #txtUsuario, #username', { visible: true });
-                    await context.type('#usernameForm, #txtUsuario, input#username, #username', username);
+                    let loginSuccess = false;
+                    for (let attempt = 0; attempt < 2; attempt++) {
+                        try {
+                            const usernameSelector = '#username.form-control, #usernameForm, input#username,  #txtUsuario, #username';
+                            const passwordSelector = '#passwordForm, #pwdSenha, #password';
+                            const loginButtonSelector = '#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login';
 
-                    await context.waitForSelector('#passwordForm, #pwdSenha, #password', { visible: true });
-                    await context.type('#passwordForm, #pwdSenha, input#password, #password', password);
+                            const usernameField = await context.waitForSelector(usernameSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                            const passwordField = await context.waitForSelector(passwordSelector, { visible: true, timeout: 5000 }).catch(() => null);
 
-                    // Clicar no botão de login
-                    await context.waitForSelector('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login', { visible: true });
-                    await context.click('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login');
+                            if (usernameField && passwordField) {
+                                await context.type(usernameSelector, username);
+                                await context.type(passwordSelector, password);
 
-                    // Esperar pela navegação pós-login
-                    await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
+                                await context.waitForSelector(loginButtonSelector, { visible: true });
+                                await context.click(loginButtonSelector);
+
+                                await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
+                                loginSuccess = true;
+                                break;
+                            } else {
+                                // Tenta clicar no botão PDPJ se não encontrou os campos
+                                const loginPdpj = '#btnSsoPdpj';
+                                const loginPdpjElement = await page.waitForSelector(loginPdpj, { visible: true, timeout: siteTimeout }).catch(() => null);
+                                if (loginPdpjElement) {
+                                    await page.click(loginPdpj);
+                                    await new Promise(resolve => setTimeout(resolve, 3000));
+                                } else {
+                                    console.log('Botão PDPJ não encontrado.');
+                                    break;
+                                }
+                            }
+                        } catch (err) {
+                            console.log('Erro durante tentativa de login:', err.message);
+                        }
+                    }
+
+                    if (!loginSuccess) {
+                        result.message = 'Falha ao localizar campos de login mesmo após clicar no botão PDPJ.';
+                    }
 
 
                     // Capturar cookies pós-login
@@ -272,7 +299,7 @@ function startExpressServer() {
                     result.cookies.push({ stage: 'post-login', cookies: postLoginCookies });
 
                     // Verificar elementos de erro no login
-                    const errorSelector = '#mensagemRetorno, #loginForm > div > div:nth-child(1) > div > div:nth-child(4) > div > div, #kc-content-wrapper > div.text-danger > span, #kc-content, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
+                    const errorSelector = '#kc-content-wrapper > div:nth-child(2) > span, #mensagemRetorno, #loginForm > div > div:nth-child(1) > div > div:nth-child(4) > div > div, #conteudologin > div.login > div.msg-login, #txaInfraMsg, div.msg-login, .error-message, .alert-danger, .invalid-feedback';
                     const errorMessageElement = await page.waitForSelector(errorSelector, { visible: true, timeout: 5000 }).catch(() => null);
                     if (errorMessageElement) {
                         const errorText = await page.evaluate(el => el.textContent, errorMessageElement);
@@ -282,12 +309,37 @@ function startExpressServer() {
                     }
 
                     // Verificar elementos que indicam sucesso no login
-                    const successSelector = '#btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                    const successSelector = '#esajMenuArea > li:nth-child(1) > a, #btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                     const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
+
+                    // Seletor do botão que abre o menu do usuário
+                    const userMenuSelector = '#barraSuperiorPrincipal > div > div.navbar-collapse > ul > li > a > span.avatar.tip-bottom > img, #btnProfile, .user-menu, .perfil, #menuUsuario, .avatar, .user-dropdown';
+
+                    // Seletor do botão de logout dentro do menu
+                    const logoutSelector = '#papeisUsuarioForm > div.menu-sair > a, .logout-button, #btnSair, .sair, #barraSuperiorPrincipal .logout';
 
                     if (successElement) {
                         result.success = true;
                         result.message = 'Login bem-sucedido!';
+
+                        // 1º Clique: Abre o menu do usuário
+                        const userMenuElement = await page.waitForSelector(userMenuSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                        if (userMenuElement) {
+                            await page.click(userMenuSelector);
+                            await new Promise(resolve => setTimeout(resolve, 5000));
+
+                            // 2º Clique: Clica no botão de logout
+                            const logoutElement = await page.waitForSelector(logoutSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                            if (logoutElement) {
+                                await page.click(logoutSelector);
+                                result.message += ' | Logoff realizado com sucesso!';
+                            } else {
+                                result.message += ' | Falha ao localizar o botão de logout.';
+                            }
+                        } else {
+                            result.message += ' | Falha ao localizar o menu de usuário.';
+                        }
+
                     } else {
                         result.message = 'Falha no login: Não foi possível verificar o sucesso.';
                     }

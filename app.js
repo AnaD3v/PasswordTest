@@ -22,31 +22,31 @@ const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public'))); // Serve arquivos estáticos da pasta "public"
 
 async function getChromePath() {
-        // Obtém o sistema operacional do usuário
-        const platform = os.platform();
-        let possiblePaths = [];
+    // Obtém o sistema operacional do usuário
+    const platform = os.platform();
+    let possiblePaths = [];
 
-        // Define possíveis caminhos do Chrome dependendo do sistema operacional
-        if (platform === 'win32') {
-            possiblePaths = [
-                'C:/Program Files/Google/Chrome/Application/chrome.exe',
-                'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-                'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
-            ];
-        } else if (platform === 'darwin') {
-            possiblePaths = [
-                '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-                '/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/Contents/MacOS/Google Chrome',
-                path.join(os.homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
-                '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
-                '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta',
-                '/Applications/Google Chrome Dev.app/Contents/MacOS/Google Chrome Dev',
-                '/opt/local/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-                path.join(os.homedir(), 'Library/Mobile Documents/com~apple~CloudDocs/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-            ];
-        } else if (platform === 'linux') {
-            possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
-        }
+    // Define possíveis caminhos do Chrome dependendo do sistema operacional
+    if (platform === 'win32') {
+        possiblePaths = [
+            'C:/Program Files/Google/Chrome/Application/chrome.exe',
+            'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+            'C:/Users/Jusbrasil/AppData/Local/Google/Chrome/Application/chrome.exe'
+        ];
+    } else if (platform === 'darwin') {
+        possiblePaths = [
+            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+            '/opt/homebrew-cask/Caskroom/google-chrome/latest/Google Chrome.app/Contents/MacOS/Google Chrome',
+            path.join(os.homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+            '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+            '/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta',
+            '/Applications/Google Chrome Dev.app/Contents/MacOS/Google Chrome Dev',
+            '/opt/local/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+            path.join(os.homedir(), 'Library/Mobile Documents/com~apple~CloudDocs/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+        ];
+    } else if (platform === 'linux') {
+        possiblePaths = ['/usr/bin/google-chrome', '/opt/google/chrome/chrome'];
+    }
 
     // Verifica se algum dos caminhos definidos realmente existe no sistema
     for (const path of possiblePaths) {
@@ -101,16 +101,16 @@ app.post('/login', async (req, res) => {
 
         console.log('Chrome aberto com o perfil do Chrome');
 
-        for (let site of sites) { // Loop para testar cada site recebido na requisição
-            let result = { site: site.title, success: false, message: '', cookies: [] }; // Objeto para armazenar resultado do site
+        for (let site of sites) {
+            let result = { site: site.title, success: false, message: '', cookies: [] };
             let page;
 
-            const siteTimeout = site.timeout || 20000; // Define o tempo limite para carregar cada site
+            const siteTimeout = site.timeout || 30000;
 
             try {
-                page = await browser.newPage(); // Abre uma nova aba no navegador
+                page = await browser.newPage();
 
-                // Se houver cookies fornecidos, define-os antes de acessar o site
+                // Validação e configuração de cookies
                 if (site.cookies && site.cookies.length > 0) {
                     const validCookies = site.cookies.filter(cookie => cookie.name && cookie.value && cookie.domain);
                     if (validCookies.length > 0) {
@@ -121,12 +121,14 @@ app.post('/login', async (req, res) => {
                     }
                 }
 
-                // Acessa o site
+                // Navegar para o site
                 await page.goto(site.url, { timeout: siteTimeout, waitUntil: 'networkidle2' });
 
+                // Verificar se há redirecionamentos ou mudanças de URL                
                 console.log(`URL atual após carregamento: ${page.url()}`);
 
-                // Captura cookies iniciais antes do login
+
+                // Capturar cookies iniciais
                 const initialCookies = await page.cookies();
                 console.log('Cookies iniciais:', JSON.stringify(initialCookies, null, 2));
                 result.cookies.push({ stage: 'initial', cookies: initialCookies });
@@ -134,12 +136,11 @@ app.post('/login', async (req, res) => {
                 let context = page; // Começa assumindo que o login está na página principal
 
                 try {
-                    // Verifica se há um iframe para realizar login dentro dele
                     const iframeElement = await page.waitForSelector('iframe', { visible: true, timeout: 5000 }).catch(() => null);
                     if (iframeElement) {
                         const tempIframe = await iframeElement.contentFrame();
                         if (tempIframe) {
-                            context = tempIframe; // Se o iframe for acessível, define como contexto
+                            context = tempIframe;
                             console.log(`Iframe encontrado e acessível no site: ${site.title}`);
                         } else {
                             console.log(`Iframe encontrado, mas inacessível. Usando página principal.`);
@@ -151,19 +152,20 @@ app.post('/login', async (req, res) => {
                     console.log(`Erro ao procurar iframe:`, error.message);
                 }
 
-                // Insere login e senha
-                await context.waitForSelector('#usernameForm, #txtUsuario, #username', { visible: true });
-                await context.type('#usernameForm, #txtUsuario, input#username, #username', username);
+                // Preencher login e senha
+                await context.waitForSelector('#username.form-control, #usernameForm, input#username,  #txtUsuario, #username', { visible: true });
+                await context.type('#username.form-control, #usernameForm, #txtUsuario, input#username, #username', username);
 
                 await context.waitForSelector('#passwordForm, #pwdSenha, #password', { visible: true });
                 await context.type('#passwordForm, #pwdSenha, input#password, #password', password);
 
-                // Clica no botão de login
-                await context.waitForSelector('#pbEntrar, #sbmEntrar, #btnEntrar, #kc-login', { visible: true });
-                await context.click('#pbEntrar, #sbmEntrar, #btnEntrar, #kc-login');
+                // Clicar no botão de login
+                await context.waitForSelector('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login', { visible: true });
+                await context.click('#fm1 > div:nth-child(3) > div.text-right.col-md-4.col-sm-4 > input, #pbEntrar, #sbmEntrar, #btnEntrar, #kc-login');
 
-                // Aguarda a navegação pós-login
+                // Esperar pela navegação pós-login
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: siteTimeout }).catch(() => null);
+
 
                 // Capturar cookies pós-login
                 const postLoginCookies = await page.cookies();
@@ -181,12 +183,37 @@ app.post('/login', async (req, res) => {
                 }
 
                 // Verificar elementos que indicam sucesso no login
-                const successSelector = '#btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
+                const successSelector = '#esajMenuArea > li:nth-child(1) > a, #btnProfile > i, #btnValidar, #root > div > header > nav > button.header__navbar__menu-hamburger.open__aside-nav--left, #root > div > header > nav > h1, #barraSuperiorPrincipal > div > div.navbar-collapse, body > pje-root > mat-sidenav-container > mat-sidenav-content > div > pje-menu-lateral, .dashboard, .user-profile, .logout-button';
                 const successElement = await page.waitForSelector(successSelector, { visible: true, timeout: siteTimeout }).catch(() => null);
+
+                // Seletor do botão que abre o menu do usuário
+                const userMenuSelector = '#barraSuperiorPrincipal > div > div.navbar-collapse > ul > li > a > span.avatar.tip-bottom > img, #btnProfile, .user-menu, .perfil, #menuUsuario, .avatar, .user-dropdown';
+
+                // Seletor do botão de logout dentro do menu
+                const logoutSelector = '#papeisUsuarioForm > div.menu-sair > a, .logout-button, #btnSair, .sair, #barraSuperiorPrincipal .logout';
 
                 if (successElement) {
                     result.success = true;
                     result.message = 'Login bem-sucedido!';
+
+                    // 1º Clique: Abre o menu do usuário
+                    const userMenuElement = await page.waitForSelector(userMenuSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                    if (userMenuElement) {
+                        await page.click(userMenuSelector);
+                        await new Promise(resolve => setTimeout(resolve, 5000));
+
+                        // 2º Clique: Clica no botão de logout
+                        const logoutElement = await page.waitForSelector(logoutSelector, { visible: true, timeout: 5000 }).catch(() => null);
+                        if (logoutElement) {
+                            await page.click(logoutSelector);
+                            result.message += ' | Logoff realizado com sucesso!';
+                        } else {
+                            result.message += ' | Falha ao localizar o botão de logout.';
+                        }
+                    } else {
+                        result.message += ' | Falha ao localizar o menu de usuário.';
+                    }
+
                 } else {
                     result.message = 'Falha no login: Não foi possível verificar o sucesso.';
                 }

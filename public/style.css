@@ -167,8 +167,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 41%;
-    left: 51%;
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 430px;
